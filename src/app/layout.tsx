@@ -3,7 +3,6 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Providers } from "./Providers";
-import { Banner } from "@/components/Banner";
 
 export const metadata: Metadata = {
   title: "AUTO21 | Used & New Cars from Hong Kong",
@@ -58,9 +57,6 @@ export default function RootLayout({
           href="https://res.cloudinary.com/dlt1zyjia/image/upload/v1764310149/header_logo_nmftlr.png"
           fetchPriority="high"
         />
-
-
-        
       </head>
       <body>
         <link
@@ -95,7 +91,7 @@ export default function RootLayout({
 
         <Providers>
           <Header />
-          <Banner />
+          {/* <Banner /> */}
           {children}
           <Footer />
         </Providers>
