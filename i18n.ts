@@ -7,24 +7,26 @@ import mn from "@/locales/mn/translation.json";
 import ru from "@/locales/ru/translation.json";
 import kk from "@/locales/kk/translation.json";
 
-const storedLang =
-  typeof window !== "undefined" ? localStorage.getItem("lang") : null;
+let initialized = false;
 
-const initialLang = storedLang || "en";
+export function initI18n() {
+  if (initialized) return i18n;
 
-i18n.use(initReactI18next).init({
-  resources: {
-    en: { translation: en },
-    mn: { translation: mn },
-    ru: { translation: ru },
-    kk: { translation: kk },
-  },
-  lng: initialLang,
-  fallbackLng: "en",
-  interpolation: { escapeValue: false },
-  react: {
-    useSuspense: false,
-  },
-});
+  const storedLang = localStorage.getItem("lang") || "en";
 
-export default i18n;
+  i18n.use(initReactI18next).init({
+    resources: {
+      en: { translation: en },
+      mn: { translation: mn },
+      ru: { translation: ru },
+      kk: { translation: kk },
+    },
+    lng: storedLang,
+    fallbackLng: "en",
+    interpolation: { escapeValue: false },
+    react: { useSuspense: false },
+  });
+
+  initialized = true;
+  return i18n;
+}
