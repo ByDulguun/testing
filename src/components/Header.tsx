@@ -81,7 +81,7 @@ export const Header: React.FC = () => {
     const map: Record<string, string[]> = {};
     brands.forEach((b) => {
       const brandCars = cars.filter(
-        (c) => c.brand.toLowerCase() === b.toLowerCase()
+        (c) => c.brand.toLowerCase() === b.toLowerCase(),
       );
       map[b] = Array.from(new Set(brandCars.map((c) => c.model)));
     });
@@ -211,7 +211,9 @@ export const Header: React.FC = () => {
         <ForgotPasswordPage setShown={setShown} />
       )}
       {shown[0] && shown[1] === "profile" && (
-        <UserProfilePage setShown={setShown} />
+        <UserProfilePage
+          setShown={(v: [boolean, string]) => setShown([v[0], v[1], null])}
+        />
       )}
 
       <div className="flex justify-between items-center px-4 gap-2">
@@ -314,10 +316,10 @@ export const Header: React.FC = () => {
                     {lng === "en"
                       ? t("lang.english")
                       : lng === "mn"
-                      ? t("lang.mongolian")
-                      : lng === "ru"
-                      ? t("lang.russian")
-                      : t("lang.kazakh")}
+                        ? t("lang.mongolian")
+                        : lng === "ru"
+                          ? t("lang.russian")
+                          : t("lang.kazakh")}
                   </button>
                 ))}
               </div>

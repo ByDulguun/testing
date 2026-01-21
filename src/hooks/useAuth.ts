@@ -15,7 +15,7 @@ export function useAuth() {
   };
 
   /* REGISTER */
-  const registerUser = async (data: Record<string, any>) => {
+  const registerUser = async (data: Record<string, string>) => {
     try {
       setAuthLoading(true);
       setError(null);
@@ -30,7 +30,7 @@ export function useAuth() {
   };
 
   /* LOGIN */
-  const loginUser = async (data: Record<string, any>) => {
+  const loginUser = async (data: Record<string, string>) => {
     try {
       setAuthLoading(true);
       setError(null);
@@ -66,7 +66,7 @@ export function useAuth() {
   const resetPassword = async (
     email: string,
     code: string,
-    newPassword: string
+    newPassword: string,
   ) => {
     try {
       setAuthLoading(true);

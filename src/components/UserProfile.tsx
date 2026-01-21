@@ -4,7 +4,11 @@ import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useAuth } from "@/hooks/useAuth";
 
-export default function UserProfilePage({ setShown }: any) {
+interface UserProfilePageProps {
+  setShown: (value: [boolean, string]) => void;
+}
+
+export default function UserProfilePage({ setShown }: UserProfilePageProps) {
   const { user, logout } = useAuthContext();
   const { changePassword, authLoading, error } = useAuth();
 

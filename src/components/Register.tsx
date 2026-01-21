@@ -25,7 +25,12 @@ export default function RegisterPage({ setShown }: RegisterPageProps) {
   const { registerUser, authLoading, error } = useAuth();
 
   const onSubmit = async (data: RegisterFormData) => {
-    const success = await registerUser(data);
+    const success = await registerUser({
+      firstname: data.firstname,
+      lastname: data.lastname,
+      email: data.email,
+      password: data.password,
+    });
 
     // Stop if registration failed — let the error message display
     if (!success) return;

@@ -36,7 +36,7 @@ export default function BidModal({
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ amount: Number(amount) }),
-        }
+        },
       );
 
       const data = await res.json();
@@ -49,9 +49,7 @@ export default function BidModal({
 
       onSuccess();
       onClose();
-    } catch (err: any) {
-      setError(err.message);
-    }
+    } catch {}
 
     setLoading(false);
   };

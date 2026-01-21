@@ -62,8 +62,8 @@ function SafeImage({
   const finalSrc = err
     ? fallbackSrc
     : cldSize
-    ? cldUrl(src, cldSize.w, cldSize.h, useLowRes ? 50 : 60)
-    : src;
+      ? cldUrl(src, cldSize.w, cldSize.h, useLowRes ? 50 : 60)
+      : src;
 
   return (
     <Image
@@ -145,7 +145,7 @@ function formatHKD(dateString: string) {
 
   // Convert to Hong Kong Time
   const hktDate = new Date(
-    date.toLocaleString("en-US", { timeZone: "Asia/Hong_Kong" })
+    date.toLocaleString("en-US", { timeZone: "Asia/Hong_Kong" }),
   );
 
   const year = hktDate.getFullYear();
@@ -169,12 +169,12 @@ export default function CarDetailPage() {
   const { t, i18n } = useTranslation();
   const rates = useFxRates();
   const [activeIndex, setActiveIndex] = useState(0);
-  const totalImages = car?.images.length;
+  const totalImages = car?.images.length ?? 0;
   const handlePrev = () => {
     setActiveIndex((prev) => (prev - 1 + totalImages) % totalImages);
   };
   const [showBid, setShowBid] = useState(false);
-  const { highestBid, refreshBid } = useHighestBid(car?.id);
+  const { highestBid, refreshBid } = useHighestBid(car?.id || "");
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % totalImages);
@@ -231,7 +231,7 @@ export default function CarDetailPage() {
       .filter(
         (c) =>
           c.id !== car.id &&
-          (c.brand === car.brand || c.bodyType === car.bodyType)
+          (c.brand === car.brand || c.bodyType === car.bodyType),
       )
       .slice(0, 4);
   }, [cars, car]);
@@ -264,7 +264,7 @@ export default function CarDetailPage() {
   });
 
   const whatsappUrl = `https://wa.me/85263809242?text=${encodeURIComponent(
-    message
+    message,
   )}`;
 
   return (
@@ -354,7 +354,7 @@ export default function CarDetailPage() {
               {FormatMoney(
                 convertPrice(car.price),
                 targetCurrency,
-                i18n.language
+                i18n.language,
               )}
             </p>
           </div>
@@ -392,7 +392,7 @@ export default function CarDetailPage() {
                 ? FormatMoney(
                     convertPrice(highestBid),
                     targetCurrency,
-                    i18n.language
+                    i18n.language,
                   )
                 : "No bids yet"}
             </p>
@@ -404,7 +404,7 @@ export default function CarDetailPage() {
           >
             Place Bid
           </button>
-          {showBid && (
+          {showBid && car.id && (
             <BidModal
               carId={car.id}
               onClose={() => setShowBid(false)}
@@ -434,7 +434,7 @@ export default function CarDetailPage() {
     </main>
   );
 }
-function SpecItem({ label, value }: { label: string; value: any }) {
+function SpecItem({ label, value }: { label: string; value: string | number }) {
   return (
     <div>
       <p className="text-base text-gray-600">{label}</p>
@@ -443,11 +443,17 @@ function SpecItem({ label, value }: { label: string; value: any }) {
   );
 }
 
-function DetailRow({ label, value }: { label: string; value: any }) {
+function DetailRow({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | number | undefined;
+}) {
   return (
     <div className="flex justify-between text-gray-800 border-b pb-2">
       <p>{label}</p>
-      <p className="font-semibold">{value}</p>
+      <p className="font-semibold">{value || "N/A"}</p>
     </div>
   );
 }

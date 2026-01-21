@@ -23,7 +23,10 @@ export default function LoginModal({ setShown }: LoginPageProps) {
   const { loginUser, authLoading, error } = useAuth();
 
   const onSubmit = async (data: LoginFormData) => {
-    const success = await loginUser(data);
+    const success = await loginUser({
+      email: data.email,
+      password: data.password,
+    });
     if (!success) return;
 
     setShown([false, "", null]);
