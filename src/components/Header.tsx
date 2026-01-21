@@ -1,6 +1,6 @@
 "use client";
 
-// import { LanguageContext } from "@/context/LanguageContext";
+import { LanguageContext } from "@/context/LanguageContext";
 import Image from "next/image";
 import React, { useContext, useEffect, useState, useMemo, useRef } from "react";
 import { FiSearch } from "react-icons/fi";
@@ -16,11 +16,13 @@ import VerifyEmailPage from "./VerifyEmail";
 import ForgotPasswordPage from "./ForgotPassword";
 import UserProfilePage from "./UserProfile";
 import { FaRegUser } from "react-icons/fa";
+import i18n from "i18next";
+import { initI18n } from "../../i18n";
 
 export const Header: React.FC = () => {
-  // const { changeLanguage, language } = useContext(LanguageContext);
+  const { changeLanguage, language } = useContext(LanguageContext);
   const { cars } = useCars();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const router = useRouter();
   const { user } = useAuthContext();
 
@@ -44,9 +46,13 @@ export const Header: React.FC = () => {
     "https://res.cloudinary.com/dlt1zyjia/image/upload/v1764310149/header_logo_nmftlr.png";
 
   useEffect(() => {
+    initI18n();
+
     const lang = localStorage.getItem("lang") || "en";
-    i18n.changeLanguage(lang).then(() => setReady(true));
-  }, [i18n]);
+    i18n.changeLanguage(lang).then(() => {
+      setReady(true);
+    });
+  }, []);
 
   useEffect(() => {
     const stored = localStorage.getItem("recentSearches");
@@ -297,10 +303,10 @@ export const Header: React.FC = () => {
               className="flex items-center gap-1 cursor-pointer"
             >
               <GrLanguage size={20} />
-              {/* <span>{language.toUpperCase()}</span> */}
+              <span>{language.toUpperCase()}</span>
             </button>
 
-            {/* {openLang && (
+            {openLang && (
               <div className="absolute right-0 mt-2 w-28 bg-white border border-gray-300 rounded shadow z-40">
                 {["en", "mn", "ru", "kk"].map((lng) => (
                   <button
@@ -323,7 +329,7 @@ export const Header: React.FC = () => {
                   </button>
                 ))}
               </div>
-            )} */}
+            )}
           </div>
         </div>
 
